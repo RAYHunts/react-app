@@ -1,4 +1,4 @@
-# Welcome to React Router!
+# Welcome to React Router
 
 A modern, production-ready template for building full-stack React applications using React Router.
 
@@ -33,6 +33,17 @@ npm run dev
 ```
 
 Your application will be available at `http://localhost:5173`.
+
+### Auth Credentials
+
+Take a look at `https://dummyjson.com/users` u can use their dummy data for auth
+for instance 
+```
+{
+    "useranme" : emilys,
+    "password" : emilyspass
+}
+```
 
 ## Building for Production
 
