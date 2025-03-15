@@ -1,18 +1,23 @@
-import { cn } from "~/lib/utils";
+import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { use, useRef, useState } from "react";
 import { useAuth } from "~/context/auth-context";
+import { cn } from "~/lib/utils";
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setIsError] = useState("");
   const { login } = useAuth();
 
   const handleLogin = async () => {
-    await login(username, password);
+    const error = await login(username, password);
+
+    if (error) {
+      setIsError(error.message);
+    }
   };
 
   return (
@@ -56,6 +61,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                 Sign up
               </a>
             </div> */}
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           </div>
         </CardContent>
       </Card>

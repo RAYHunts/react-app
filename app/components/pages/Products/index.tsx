@@ -15,12 +15,6 @@ export default function ProductPage() {
     if (searchParams.get("query")) {
       url += `/search?q=${searchParams.get("query")}`;
     }
-    if (searchParams.get("limit")) {
-      url += `?limit=${searchParams.get("limit")}`;
-    }
-    if (searchParams.get("skip")) {
-      url += `?skip=${searchParams.get("skip")}`;
-    }
 
     const response = await fetch(url);
     const result = (await response.json()) as ProductResponseApi;
@@ -70,9 +64,11 @@ export default function ProductPage() {
                 <p>{product.description}</p>
               </div>
             ))}
+
+        {!isLoading && products?.length === 0 && <h1 className="text-2xl font-bold text-red-600 place-self-center col-span-5 my-4">Sorry u got no products</h1>}
       </div>
 
-      <div className="flex gap-4 items-center">
+      {/* <div className="flex gap-4 items-center">
         <Button className="p-2 bg-green-900 rounded-2xl hover:cursor-pointer" onClick={() => handlePagination("previous")} disabled={searchParams.get("skip") === "0" || isLoading}>
           Previous
         </Button>
@@ -80,7 +76,7 @@ export default function ProductPage() {
         <Button className="p-2 bg-green-900 rounded-2xl cursor-pointer" onClick={() => handlePagination("next")} disabled={(products && products.length < 10) || isLoading}>
           Next
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 }

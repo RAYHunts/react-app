@@ -2,7 +2,7 @@ import { createContext, type PropsWithChildren, useContext, useEffect, useState 
 import type { AuthSession } from "~/types/auth.type";
 
 interface AuthProviderProps {
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<Error | void>;
   logout: () => void;
   session: AuthSession | null;
   isLoading: boolean;
@@ -32,15 +32,21 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     try {
       const response = await fetch("https://dummyjson.com/auth/login", {
         method: "POST",
-        body: JSON.stringify({ username, password }),
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
-      const session = await response.json();
-      setSession(session);
-      localStorage.setItem("session", JSON.stringify(session));
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error(errorData);
+        return errorData as Error;
+      }
+
+      const sessionData = await response.json();
+      setSession(sessionData);
+      localStorage.setItem("session", JSON.stringify(sessionData));
     } catch (error) {
-      console.error(error);
+      console.error("An error occurred during login:", error);
     }
   };
 
