@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { data, useSearchParams } from "react-router";
 import { Button } from "~/components/ui/button";
+import ImageLoader from "~/components/ui/ImageLoader";
 import { useDebounce } from "~/hooks/useDebounce";
 import type { Product, ProductResponseApi } from "~/types/product.type";
 
@@ -58,7 +59,8 @@ export default function ProductPage() {
           : products?.map((product) => (
               <div key={product.id} className="flex flex-col gap-2 bg-green-800 p-4 rounded-2xl group hover:cursor-pointer relative">
                 <div className="flex items-center justify-center overflow-hidden aspect-video">
-                  <img src={"https://picsum.photos/300/200"} alt={product.title} width={300} height={200} className="group-hover:scale-150 object-cover transition-all" />
+                  {/* <img src={"https://picsum.photos/300/200"} alt={product.title} width={300} height={200} className="group-hover:scale-150 object-cover transition-all" /> */}
+                  <ImageLoader src={"https://picsum.photos/300/200"} alt={product.title} width={300} height={200} className="group-hover:scale-150 object-cover transition-all" />
                 </div>
                 <h2>{product.title}</h2>
                 <p>{product.description}</p>
